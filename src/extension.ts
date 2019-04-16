@@ -64,7 +64,7 @@ async function runMakeByTarget() {
 // Get a list of targets
 function findMakeTargets(): string[] {
     // This is approximately the Bash completion sequence run to get make targets.
-    const bashCompletion = `make -pRrq : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($1 !~ "^[#.]") {print $1}}' | egrep -v '^[^[:alnum:]]' | sort | xargs`;
+    const bashCompletion = `LANG= make -pRrq : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($1 !~ "^[#.]") {print $1}}' | egrep -v '^[^[:alnum:]]' | sort | xargs`
     let res = execSync(bashCompletion, {cwd: vscode.workspace.rootPath});
     return res.toString().split(" ");
 }
